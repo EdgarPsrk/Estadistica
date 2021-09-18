@@ -1,26 +1,27 @@
-b = 1.5000001
+
+
+b = 123.44
 print(b)
-c = int(b)
+c = round(b, 1)
 print('numero redondead', c)
 
-b = 1.499999
+b = 123.49
 print(b)
-c = int(b)
+c = round(b, 1)
 print('numero redondead', c)
 
-b = 1.00001
+b = 123.45
 print(b)
-c = int(b)
+c = round(b, 1)
 print('numero redondead', c)
 
-b = 1.0
+b = 123.449
 print(b)
-c = int(b)
+c = round(b, 1)
 print('numero redondead', c)
 
-b = 1.99999
+b = 123.441
 print(b)
-c = int(b)
+c = round(b, 1)
 print('numero redondead', c)
-
 
