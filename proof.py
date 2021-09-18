@@ -1,27 +1,10 @@
-
-
-b = 123.44
-print(b)
-c = round(b, 1)
-print('numero redondead', c)
-
-b = 123.49
-print(b)
-c = round(b, 1)
-print('numero redondead', c)
-
-b = 123.45
-print(b)
-c = round(b, 1)
-print('numero redondead', c)
-
-b = 123.449
-print(b)
-c = round(b, 1)
-print('numero redondead', c)
-
-b = 123.441
-print(b)
-c = round(b, 1)
-print('numero redondead', c)
-
+a = 23
+b= 24
+c = 34
+d= 'adios'
+print(f""" 
+valor de a {a}
+valor de b {b}
+valor de c {c}
+nosotros decimos {d}
+""")

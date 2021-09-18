@@ -26,7 +26,7 @@ def amplitudF(uniV, amplitud):
         a += 1
         b = int(uniV)
         print('Esta seria tu amplitud final: ', a)
-        return a
+        return a,b
 
     elif uniV == '0.1':
         a = float(uniV)
@@ -42,7 +42,7 @@ def amplitudF(uniV, amplitud):
             e = round(amplitud, 1)
             print('Tu amplitud es: ', e)
 
-        return e
+        return e,a
 
     elif uniV == '0.01':
         a = float(uniV)
@@ -58,7 +58,7 @@ def amplitudF(uniV, amplitud):
             e = round(amplitud, 2)
             print('Tu amplitud es: ', e)
 
-        return e
+        return e,a
 
     else:
         print('Perdoname solo puedo operarar con  1, 0.1 y 0.01')
@@ -74,6 +74,33 @@ def condicion(amplitud, intervalo, rango):
         print('La condicion no se cumple')
 
 
+def imprimirC(contenedor):
+    print(contenedor)
+    contenedor.sort()
+    print('tus datos ordenados\n', contenedor)
+    n = len(contenedor)
+    print('tamaño del arreglo: ', n)
+    return n
+
+
+def agrupamientoT(datom, datoM, n, unidad_variacion):
+    rango = datoM - datom
+    print('Rango: ', rango)
+
+    k = intervalo(n)
+    kfinal= redondeo(k)
+
+    opAmplitud = rango / kfinal
+    ampFinal = amplitudF(unidad_variacion,opAmplitud)
+    #ampFinal me retorna el valor final de la amplitud y la unidada de variacion convertida 
+    ampAprobacion = ampFinal[0]
+    unidadV = ampFinal[1]
+
+    condicion(ampAprobacion,kfinal,rango)
+
+    return kfinal, ampAprobacion, unidadV
+
+
 
 
 
@@ -82,32 +109,64 @@ if __name__ == "__main__":
     inicio = input('Para iniciar coloca si\n')
 
     while inicio != 'no':
-        largo_contenedor = int(input('¿Que tamaño tiene n?\n'))
-        n = largo_contenedor
-        contenedor = []
-
-        while largo_contenedor != 0:
-            dato = int(input('Ingresa los datos\n'))
-            contenedor.append(dato)
-            largo_contenedor -= 1
-
-        print('Estos son tus datos\n', contenedor)
-        contenedor.sort()
-        print('Lista acomodada', contenedor)
-
+        
         unidad_variacion = input( '¿Cual es la unidad de variacion?')
 
-        datoM = contenedor[largo_contenedor-1]
-        datom = contenedor[0]
+        if unidad_variacion == '1':
+            print('digite sus datos: ')
+            contenedor = list( map( int, input().split(',') ) )
 
-        rango = datoM - datom
-        k = intervalo(n)
-        opAmplitud = rango / k
-        kfinal= redondeo(k)
-        ampFinal = amplitudF(unidad_variacion,opAmplitud)
+            muestra = imprimirC(contenedor)
 
-        print('Rango: ', rango)
-        aprobacion = condicion(ampFinal,kfinal,rango)
+            datom = contenedor[0]
+            datoM = contenedor[muestra-1]
+            data = agrupamientoT(datom, datoM, muestra,unidad_variacion)
+        else:
+            print('digite sus datos: ')
+            contenedor = list( map( float, input().split(',') ) )
+
+            muestra = imprimirC(contenedor)
+
+            datom = contenedor[0]
+            datoM = contenedor[muestra-1]
+            data = agrupamientoT(datom, datoM, muestra, unidad_variacion)
+
+        print('Dato menor:', datom)
+        print('Dato mayor:', datoM)
+        k = data[0]
+        inter = k
+
+        amp = data[1]
+
+        unidad_variacion = data[2]
+        
+        array = []
+        array.append(datom)
+        lsc = datom + amp - unidad_variacion
+
+        while k > 1:
+            datom += amp
+            array.append(datom)
+            k -= 1
+        
+        print('limites inferiores de clase\n', array)
+
+        array = []
+        array.append(lsc)
+        k = inter
+
+        while k > 1:
+            lsc += amp
+            array.append(lsc)
+            k-=1
+        
+        print('limites superiores de clase\n', array)
+
+
+
+
+        
+        
         
 
         inicio = input('Tienes otro arreglo\n') 
