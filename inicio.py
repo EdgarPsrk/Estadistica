@@ -1,14 +1,11 @@
 from math import log
 
 def intervalo(muestra):
-    a = log(muestra, 10)
-    b = 3.322
-    c = a*b
-    return 1 + c
+    a = 3.322 * log(muestra, 10)
+    return 1 + a
 
 
 def redondeo(k):
-
     if type(k) == float:
         a = int(k)
         a += 1 
@@ -75,11 +72,12 @@ def condicion(amplitud, intervalo, rango):
 
 
 def imprimirC(contenedor):
-    print(contenedor)
+    print('Estos son tus datos\n', contenedor)
     contenedor.sort()
-    print('tus datos ordenados\n', contenedor)
+    print('---------------------------------------------------')
+    print('Tus datos ordenados\n', contenedor)
     n = len(contenedor)
-    print('tamaño del arreglo: ', n)
+    print('Tamaño del arreglo: ', n)
     return n
 
 
@@ -101,6 +99,91 @@ def agrupamientoT(datom, datoM, n, unidad_variacion):
     return kfinal, ampAprobacion, unidadV
 
 
+def limitesC(k,amp,datom):
+    array = []
+    array.append(datom)
+
+    while k > 1:
+        datom += amp
+        array.append(datom)
+        k -= 1
+        
+    return array
+
+
+def marcaC(lci,lcs,k):
+    contador = 0
+    array = []
+
+    while contador < k:
+        marca =  int( ( lci[contador] + lcs[contador] ) / 2 )
+        array.append(marca)
+        contador += 1
+    
+    return array
+
+
+def frecuencia_absoluta(k, contenedor, inferior, superior):
+    contador = 0
+    cuenta = 0
+    fi = []
+
+    while contador < k:
+        for i in contenedor:
+            if i <= superior[contador] and i >= inferior[contador]: 
+                cuenta += 1
+
+        fi.append(cuenta)
+        contador += 1 
+        cuenta = 0 
+    return fi
+
+
+def fRelativa(k, array, n):
+    contador = 0
+    fr = []
+
+    while contador < k:
+        data = ( array[contador] / n ) * 100
+        data = round(data, 3)
+        contador += 1
+        fr.append(data)
+    return fr
+
+
+def fAcumulada (k, array):
+    contador = 1
+    a = array[0]
+    fa = [a]
+
+    while contador < k:
+        a += array[contador] 
+        fa.append(a)
+        contador += 1
+    return fa
+
+def render(inferior, superior,k,titulo):
+    print('-------------------------------------------------------------------')
+    contador = 0
+    print(titulo)
+    while contador < k:
+        print(f"""
+        {inferior[contador]} - {superior[contador]}
+        """, end = '')
+        contador += 1
+
+
+def render1(dato, k, titulo):
+    print('-------------------------------------------------------------------')
+    contador = 0 
+    print(titulo)
+
+    while contador < k:
+        print(f"""
+        {dato[contador]}
+        """, end = '')
+        contador += 1
+
 
 
 
@@ -110,10 +193,10 @@ if __name__ == "__main__":
 
     while inicio != 'no':
         
-        unidad_variacion = input( '¿Cual es la unidad de variacion?')
+        unidad_variacion = input( '¿Cual es la unidad de variacion?\n')
 
         if unidad_variacion == '1':
-            print('digite sus datos: ')
+            print('Digite sus datos: ')
             contenedor = list( map( int, input().split(',') ) )
 
             muestra = imprimirC(contenedor)
@@ -122,7 +205,7 @@ if __name__ == "__main__":
             datoM = contenedor[muestra-1]
             data = agrupamientoT(datom, datoM, muestra,unidad_variacion)
         else:
-            print('digite sus datos: ')
+            print('Digite sus datos: ')
             contenedor = list( map( float, input().split(',') ) )
 
             muestra = imprimirC(contenedor)
@@ -133,41 +216,53 @@ if __name__ == "__main__":
 
         print('Dato menor:', datom)
         print('Dato mayor:', datoM)
+
         k = data[0]
-        inter = k
-
         amp = data[1]
-
         unidad_variacion = data[2]
-        
-        array = []
-        array.append(datom)
-        lsc = datom + amp - unidad_variacion
+        n = len(contenedor)
 
-        while k > 1:
-            datom += amp
-            array.append(datom)
-            k -= 1
-        
-        print('limites inferiores de clase\n', array)
+        title1 = 'Limites de clases'
+        lsc1 = datom + amp - unidad_variacion
+        limCi= limitesC(k,amp, datom)
+        limCs = limitesC(data[0], data[1], lsc1)
 
-        array = []
-        array.append(lsc)
-        k = inter
+        title2 = 'Limites Reales de Clase'
+        lrci = limCi[0] - (unidad_variacion/2)
+        lrcs = limCs[0] + (unidad_variacion/2)
+        limRCS = limitesC(k,amp,lrcs)
+        limRCi = limitesC(k,amp,lrci)
 
-        while k > 1:
-            lsc += amp
-            array.append(lsc)
-            k-=1
-        
-        print('limites superiores de clase\n', array)
+        title3 = 'Marcas de clase'
+        xi = marcaC(limCi,limCs,k)
+
+        title4 = 'Frecuencia absoluta'
+        fi = frecuencia_absoluta(k,contenedor,limCi,limCs)
+
+        title5 = 'frecuencia relativa en %'
+        fr = fRelativa(k, fi, n)
+
+        title6 = 'Frecuencia acumulada'
+        fa = fAcumulada(k, fi)
+
+        title7 = 'Frecuencia acumulada relativa en %'
+        far = fAcumulada(k,fr)
+
+        title8 = 'Frecuencia complementaria'
+
+        title9 = 'Frecuencia complementaria relativa'
+
+
+        render(limCi, limCs,k, title1)
+        render(limRCi,limRCS,k,title2)
+        render1(xi,k,title3)
+        render1(fi,k,title4)
+        render1(fr,k,title5)
+        render1(fa,k,title6)
+        render1(far,k,title7)
 
 
 
-
-        
-        
-        
-
+        print('')
         inicio = input('Tienes otro arreglo\n') 
 
