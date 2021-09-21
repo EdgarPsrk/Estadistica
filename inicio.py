@@ -111,14 +111,22 @@ def limitesC(k,amp,datom):
     return array
 
 
-def marcaC(lci,lcs,k):
+def marcaC(lci,lcs,k, uniV):
     contador = 0
     array = []
 
-    while contador < k:
-        marca =  int( ( lci[contador] + lcs[contador] ) / 2 )
-        array.append(marca)
-        contador += 1
+    if uniV == 1: 
+
+        while contador < k:
+            marca =  int( ( lci[contador] + lcs[contador] ) / 2 )
+            array.append(marca)
+            contador += 1
+    else:
+        while contador < k:
+            marca =  ( lci[contador] + lcs[contador] ) / 2 
+            array.append(marca)
+            contador += 1
+
     
     return array
 
@@ -263,7 +271,7 @@ if __name__ == "__main__":
         limRCi = limitesC(k,amp,lrci)
 
         title3 = 'Marcas de clase'
-        xi = marcaC(limCi,limCs,k)
+        xi = marcaC(limCi,limCs,k, unidad_variacion)
 
         title4 = 'Frecuencia absoluta'
         fi = frecuencia_absoluta(k,contenedor,limCi,limCs)
