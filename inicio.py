@@ -162,6 +162,35 @@ def fAcumulada (k, array):
         contador += 1
     return fa
 
+
+def fComplementaria(muestra, array, k):
+    contador = 0
+    fc =[muestra]
+    a = muestra
+
+    while contador < k:
+        a -= array[contador]
+        fc.append(a)
+        contador  += 1
+
+    return fc
+
+
+def frecuenciaCR(array, n, k):
+    fcr = []
+    contador = 0
+
+    while contador < k:
+        a = round(100*array[contador]/n, 2)
+        fcr.append(a)
+        contador += 1
+
+    return fcr
+
+
+
+
+
 def render(inferior, superior,k,titulo):
     print('-------------------------------------------------------------------')
     contador = 0
@@ -249,8 +278,11 @@ if __name__ == "__main__":
         far = fAcumulada(k,fr)
 
         title8 = 'Frecuencia complementaria'
+        fc = fComplementaria(n, fi, k)
 
-        title9 = 'Frecuencia complementaria relativa'
+        title9 = 'Frecuencia complementaria relativa en %'
+        fcr = frecuenciaCR(fc, n, k)
+
 
 
         render(limCi, limCs,k, title1)
@@ -260,6 +292,9 @@ if __name__ == "__main__":
         render1(fr,k,title5)
         render1(fa,k,title6)
         render1(far,k,title7)
+        render1(fc, k, title8)
+        render1(fcr, k, title9)
+
 
 
 
